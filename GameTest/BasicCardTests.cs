@@ -1,13 +1,7 @@
 using GameLib;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Linq;
-using System;
-using System.Runtime.InteropServices.ComTypes;
-using System.Security;
 using GameLib.Tables;
-using Xunit;
-using System.Collections.Generic;
-using GameLib.Games;
 
 namespace GameTest
 {
@@ -16,7 +10,7 @@ namespace GameTest
     {
 
         [TestMethod]
-        public void testStandardDeckSize()
+        public void TestStandardDeckSize()
         {
             var expectedDeckSize = 52;
             var expectedSuitNumber = 4;
@@ -26,8 +20,6 @@ namespace GameTest
             Assert.IsTrue(deck.Cards.Where(card => card.Suit == CardSuit.Club).Count() == expectedDeckSize / expectedSuitNumber);
 
         }
-
-
 
     }
 }

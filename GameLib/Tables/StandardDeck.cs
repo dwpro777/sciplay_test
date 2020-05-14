@@ -52,7 +52,7 @@ namespace GameLib.Tables
         public List<Card> Deal(int cardCount)
         {
             var dealtCards = new List<Card>();
-            foreach(var cardDealIndex in Enumerable.Range(0, cardCount))
+            foreach (var cardDealIndex in Enumerable.Range(0, cardCount))
             {
                 if (cardDealIndex + CardIndex < Cards.Count)
                 {
@@ -60,10 +60,11 @@ namespace GameLib.Tables
                     CardIndex++;
                 }
                 else
-                    throw new IndexOutOfRangeException(); 
+                    throw new IndexOutOfRangeException();
             }
             return dealtCards;
         }
     }
-
 }
+
+

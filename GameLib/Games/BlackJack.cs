@@ -10,16 +10,16 @@ namespace GameLib.Games
 {
     public class Blackjack : Game
     {
-        private readonly CardName[] facecards = { CardName.Jack, CardName.Queen, CardName.King };
+        private readonly CardName[] Facecards = { CardName.Jack, CardName.Queen, CardName.King };
         public override GameType GetGameType() => GameType.Blackjack;
 
-        public override int getBestScore(Hand hand)
+        public override int GetBestScore(Hand hand)
         {
             var potentialOutcomes = new List<int>() { 0 };
             
             foreach(Card card in hand.Cards)
             {
-                var cardValue = facecards.Contains(card.Name) ? 10 : (int)card.Name;
+                var cardValue = Facecards.Contains(card.Name) ? 10 : (int)card.Name;
 
                 var newOutcomes = new List<int>();
                 foreach(var outcomeIndex in Enumerable.Range(0, potentialOutcomes.Count))
@@ -43,6 +43,8 @@ namespace GameLib.Games
             //return value, -1 for bust
             return bestScoreQuery.Any() ? bestScoreQuery.Max() : -1;
         }
+
+        //<TODO handle splits
 
     }
 }

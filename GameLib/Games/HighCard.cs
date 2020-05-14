@@ -13,7 +13,7 @@ namespace GameLib.Games
         private readonly CardName[] facecards = { CardName.Jack, CardName.Queen, CardName.King };
         public override GameType GetGameType() => GameType.HighCard;
 
-        public override int getBestScore(Hand hand)
+        public override int GetBestScore(Hand hand)
         {
             var potentialOutcomes = new List<int>() { 0 };
             

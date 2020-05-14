@@ -4,6 +4,8 @@ using System.Linq;
 using GameLib.Tables;
 using System.Collections.Generic;
 using GameLib.Games;
+using System;
+using System.Diagnostics;
 
 namespace GameTest
 {
@@ -60,7 +62,7 @@ namespace GameTest
             var standardDeck = new StandardDeck();
             var highCardGame = new HighCard();
 
-            highCardGame.setDeck(standardDeck);
+            highCardGame.SetDeck(standardDeck);
             highCardGame.Shuffle();
 
             var player1 = new Player() { Name = "player1" };
@@ -80,6 +82,7 @@ namespace GameTest
             Assert.AreEqual(player2Hand.Cards.Count, 1);
 
             var handOutcome = highCardGame.GetHandOutcome(player1Hand, player2Hand);
+            Debug.WriteLine($"outcome: {handOutcome}");
 
         }
 

@@ -22,8 +22,8 @@ namespace GameLib.Games
 
         public HandOutcome GetHandOutcome(Hand playerCards, Hand opponentCards)
         {
-            var playerBestScore = getBestScore(playerCards);
-            var opponentBestScore = getBestScore(opponentCards);
+            var playerBestScore = GetBestScore(playerCards);
+            var opponentBestScore = GetBestScore(opponentCards);
             
             if (playerBestScore > opponentBestScore)
                 return HandOutcome.Win;
@@ -34,7 +34,7 @@ namespace GameLib.Games
 
         }
 
-        public void setDeck(IDeck deck)
+        public void SetDeck(IDeck deck)
         {
             Deck = deck;
         }
@@ -68,7 +68,7 @@ namespace GameLib.Games
         }
 
         public abstract GameType GetGameType();
-        public abstract int getBestScore(Hand hand);
+        public abstract int GetBestScore(Hand hand);
 
     }
 }

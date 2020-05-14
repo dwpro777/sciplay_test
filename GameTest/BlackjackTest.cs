@@ -1,10 +1,10 @@
 using GameLib;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Linq;
-using System;
 using GameLib.Tables;
 using System.Collections.Generic;
 using GameLib.Games;
+using System.Diagnostics;
 
 namespace GameTest
 {
@@ -65,7 +65,7 @@ namespace GameTest
             var standardDeck = new StandardDeck();
             var blackJackGame = new Blackjack();
 
-            blackJackGame.setDeck(standardDeck);
+            blackJackGame.SetDeck(standardDeck);
             blackJackGame.Shuffle();
 
             var player1 = new Player() { Name = "player1" };
@@ -87,11 +87,9 @@ namespace GameTest
             Assert.AreEqual(player2Hand.Cards.Count, 2);
 
             var handOutcome = blackJackGame.GetHandOutcome(player1Hand, player2Hand);
-
+            Debug.WriteLine($"outcome: {handOutcome}");
 
         }
-
-
 
     }
 }

@@ -1,0 +1,3 @@
+﻿https://docs.microsoft.com/en-us/ef/ef6/modeling/code-first/workflows/new-database (for setting up entity framework Core back-end.  Triaged the persistence side in the interest of time)
+https://www.meziantou.net/mstest-v2-data-tests.htm (for using dynamic data in unit test)
+
