@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using GameLib.Games;
 using System;
 using System.Diagnostics;
+using System.Runtime.InteropServices.ComTypes;
 
 namespace GameTest
 {
@@ -59,30 +60,47 @@ namespace GameTest
         [TestMethod]
         public void DealGame()
         {
-            var standardDeck = new StandardDeck();
-            var highCardGame = new HighCard();
+            var rounds = 50;
+            var players = 5;
 
-            highCardGame.SetDeck(standardDeck);
-            highCardGame.Shuffle();
+            foreach(var round in Enumerable.Range(1, rounds))
+            {
+                var standardDeck = new StandardDeck();
+                var highCardGame = new HighCard();
 
-            var player1 = new Player() { Name = "player1" };
-            var player2 = new Player() { Name = "player2" };
+                highCardGame.SetDeck(standardDeck);
+                highCardGame.Shuffle();
 
-            highCardGame.AddPlayer(player1);
-            highCardGame.AddPlayer(player2);
+                var playerList = new List<Player>();
+                foreach(var index in Enumerable.Range(0, players))
+                {
+                    playerList.Add(new Player() { Name = $"Player {index}" });
+                }
 
-            var player1Hand = highCardGame.AddPlayerHand(player1);
-            var player2Hand = highCardGame.AddPlayerHand(player2);
+                var playerHands = new List<Hand>();
+                foreach(var player in playerList)
+                {
+                    highCardGame.AddPlayer(player);
+                    playerHands.Add(highCardGame.AddPlayerHand(player));
+                }
 
-            highCardGame.DealToPlayer(1, player1Hand);
-            highCardGame.DealToPlayer(1, player2Hand);
+                foreach(var hand in playerHands)
+                {
+                    highCardGame.DealToPlayer(1, hand);
+                    Assert.AreEqual(hand.Cards.Count, 1);
+                }
 
+                foreach(var hand in playerHands)
+                {
+                    foreach(var opponentHand in playerHands.Where( h => h!=hand))
+                    {
+                        var handOutcome = highCardGame.GetHandOutcome(hand, opponentHand);
+                        Debug.WriteLine($"outcome round {round}: {hand.Player.Name} vs {opponentHand.Player.Name} card {hand.Cards.First().Name } { handOutcome} against {opponentHand.Cards.First().Name} ");
+                    }
+                }
 
-            Assert.AreEqual(player1Hand.Cards.Count, 1);
-            Assert.AreEqual(player2Hand.Cards.Count, 1);
+            }
 
-            var handOutcome = highCardGame.GetHandOutcome(player1Hand, player2Hand);
-            Debug.WriteLine($"outcome: {handOutcome}");
 
         }
 

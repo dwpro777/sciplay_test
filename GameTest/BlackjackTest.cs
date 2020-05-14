@@ -62,32 +62,49 @@ namespace GameTest
         [TestMethod]
         public void DealGame()
         {
-            var standardDeck = new StandardDeck();
-            var blackJackGame = new Blackjack();
+            var rounds = 50;
+            var players = 5;
 
-            blackJackGame.SetDeck(standardDeck);
-            blackJackGame.Shuffle();
+            foreach(var round in Enumerable.Range(1, rounds))
+            {
+                var standardDeck = new StandardDeck();
+                var blackjackGame = new Blackjack();
 
-            var player1 = new Player() { Name = "player1" };
-            var player2 = new Player() { Name = "player2" };
+                blackjackGame.SetDeck(standardDeck);
+                blackjackGame.Shuffle();
 
-            blackJackGame.AddPlayer(player1);
-            blackJackGame.AddPlayer(player2);
+                var playerList = new List<Player>();
+                foreach(var index in Enumerable.Range(0, players))
+                {
+                    playerList.Add(new Player() { Name = $"Player {index}" });
+                }
 
-            var player1Hand = blackJackGame.AddPlayerHand(player1);
-            var player2Hand = blackJackGame.AddPlayerHand(player2);
+                var playerHands = new List<Hand>();
+                foreach(var player in playerList)
+                {
+                    blackjackGame.AddPlayer(player);
+                    playerHands.Add(blackjackGame.AddPlayerHand(player));
+                }
 
-            blackJackGame.DealToPlayer(1, player1Hand);
-            blackJackGame.DealToPlayer(1, player2Hand);
-            blackJackGame.DealToPlayer(1, player1Hand);
-            blackJackGame.DealToPlayer(1, player2Hand);
+                //give each player two cards
+                foreach(var index in Enumerable.Range(0, 2))
+                {
+                    foreach(var hand in playerHands)
+                    {
+                        blackjackGame.DealToPlayer(1, hand);
+                    }
+                }
 
+                foreach(var hand in playerHands)
+                {
+                    foreach(var opponentHand in playerHands.Where( h => h!=hand))
+                    {
+                        var handOutcome = blackjackGame.GetHandOutcome(hand, opponentHand);
+                        Debug.WriteLine($"outcome round {round}: {hand.Player.Name} vs {opponentHand.Player.Name} card {hand.Cards[0].Name }/{hand.Cards[1].Name}  { handOutcome} against {opponentHand.Cards[0].Name}/{opponentHand.Cards[1].Name}  ");
+                    }
+                }
 
-            Assert.AreEqual(player1Hand.Cards.Count, 2);
-            Assert.AreEqual(player2Hand.Cards.Count, 2);
-
-            var handOutcome = blackJackGame.GetHandOutcome(player1Hand, player2Hand);
-            Debug.WriteLine($"outcome: {handOutcome}");
+            }
 
         }
 
