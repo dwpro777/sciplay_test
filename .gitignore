@@ -1,0 +1,12 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+/.vs
+/CardGame/.vs/CardGame
+/CardGame/bin
+/CardGame/obj
+/GameTest/bin
+/GameTest/obj
+/GameLib/bin
+/GameLib/obj
