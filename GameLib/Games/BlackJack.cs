@@ -44,7 +44,9 @@ namespace GameLib.Games
             return bestScoreQuery.Any() ? bestScoreQuery.Max() : -1;
         }
 
-        //<TODO handle splits
+        //<TODO> handle splits
+        //Consider, who can see which cards, who is playing against whom (ie, is everyone playing against the house)
+        //how should dealing rules be handled, since there would need to be interaction
 
     }
 }

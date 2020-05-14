@@ -1,0 +1,2 @@
+﻿https://docs.microsoft.com/en-us/ef/ef6/modeling/code-first/workflows/new-database
+https://hamidmosalla.com/2017/02/25/xunit-theory-working-with-inlinedata-memberdata-classdata/

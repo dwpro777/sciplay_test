@@ -10,8 +10,9 @@ namespace GameLib.Games
 {
     public class HighCard: Game
     {
-        private readonly CardName[] facecards = { CardName.Jack, CardName.Queen, CardName.King };
         public override GameType GetGameType() => GameType.HighCard;
+
+        //Question: How to enforce 'rules' (ie, who would control dealing, should that be enforced by the game class?)
 
         public override int GetBestScore(Hand hand)
         {
