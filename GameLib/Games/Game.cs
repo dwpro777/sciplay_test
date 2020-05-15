@@ -34,41 +34,45 @@ namespace GameLib.Games
 
         }
 
-        public void SetDeck(IDeck deck)
+        protected void SetDeck(IDeck deck)
         {
             Deck = deck;
         }
 
-        public void Shuffle()
+        protected void Shuffle()
         {
             Deck.Shuffle();
         }
 
-        public void DealToPlayer(int NumberOfCards, Hand hand)
+        protected void DealToPlayer(int NumberOfCards, Hand hand)
         {
             hand.Cards.AddRange(Deck.Deal(NumberOfCards));
         }
 
-        public void AddPlayer(Player player)
+        protected void AddPlayer(Player player)
         {
             Players.Add(player);
         }
 
-        public Hand AddPlayerHand(Player player)
+        protected Hand AddPlayerHand(Player player)
         {
             var newHand = new Hand() { Player = player }; 
             PlayerHands.Add(newHand);
             return newHand;
         }
 
-        public void RemovePlayer(Player player)
+        protected void RemovePlayer(Player player)
         {
             PlayerHands = PlayerHands.Where(ph => ph.Player != player).ToList();
             Players.Remove(player);
         }
 
         public abstract GameType GetGameType();
+        public abstract void CreateGame(int playerCount);
+        public abstract void DealHand();
+
         public abstract int GetBestScore(Hand hand);
+        public abstract void OutputHandResults();
 
     }
 }

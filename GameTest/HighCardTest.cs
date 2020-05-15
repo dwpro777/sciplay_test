@@ -42,6 +42,8 @@ namespace GameTest
                 new object[] {new HighCardTestHand(new List<CardName>() { CardName.Ace}, new List<CardName> { CardName.Jack}, HandOutcome.Win) },
                 new object[] {new HighCardTestHand(new List<CardName>() { CardName.Four}, new List<CardName> { CardName.Jack}, HandOutcome.Lose) },
                 new object[] {new HighCardTestHand(new List<CardName>() { CardName.Two}, new List<CardName> { CardName.Two}, HandOutcome.Draw) },
+                new object[] {new HighCardTestHand(new List<CardName>() { CardName.Five}, new List<CardName> { CardName.Ten}, HandOutcome.Lose) },
+                new object[] {new HighCardTestHand(new List<CardName>() { CardName.Five}, new List<CardName> { CardName.Two}, HandOutcome.Win) },
        };
 
         [TestMethod]
@@ -65,39 +67,10 @@ namespace GameTest
 
             foreach(var round in Enumerable.Range(1, rounds))
             {
-                var standardDeck = new StandardDeck();
-                var highCardGame = new HighCard();
-
-                highCardGame.SetDeck(standardDeck);
-                highCardGame.Shuffle();
-
-                var playerList = new List<Player>();
-                foreach(var index in Enumerable.Range(0, players))
-                {
-                    playerList.Add(new Player() { Name = $"Player {index}" });
-                }
-
-                var playerHands = new List<Hand>();
-                foreach(var player in playerList)
-                {
-                    highCardGame.AddPlayer(player);
-                    playerHands.Add(highCardGame.AddPlayerHand(player));
-                }
-
-                foreach(var hand in playerHands)
-                {
-                    highCardGame.DealToPlayer(1, hand);
-                    Assert.AreEqual(hand.Cards.Count, 1);
-                }
-
-                foreach(var hand in playerHands)
-                {
-                    foreach(var opponentHand in playerHands.Where( h => h!=hand))
-                    {
-                        var handOutcome = highCardGame.GetHandOutcome(hand, opponentHand);
-                        Debug.WriteLine($"outcome round {round}: {hand.Player.Name} vs {opponentHand.Player.Name} card {hand.Cards.First().Name } { handOutcome} against {opponentHand.Cards.First().Name} ");
-                    }
-                }
+                var highcardGame = new HighCard();
+                highcardGame.CreateGame(players);
+                highcardGame.DealHand();
+                highcardGame.OutputHandResults();
 
             }
 

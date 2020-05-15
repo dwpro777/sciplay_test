@@ -1,6 +1,7 @@
 ﻿using GameLib.Tables;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Runtime.InteropServices.ComTypes;
 using System.Text;
@@ -11,6 +12,7 @@ namespace GameLib.Games
     public class Blackjack : Game
     {
         private readonly CardName[] Facecards = { CardName.Jack, CardName.Queen, CardName.King };
+        private const int numberOfCardsToDeal = 2; 
         public override GameType GetGameType() => GameType.Blackjack;
 
         public override int GetBestScore(Hand hand)
@@ -42,6 +44,50 @@ namespace GameLib.Games
             var bestScoreQuery = potentialOutcomes.Where(o => o < 22);
             //return value, -1 for bust
             return bestScoreQuery.Any() ? bestScoreQuery.Max() : -1;
+        }
+
+        public override void CreateGame(int playerCount)
+        {
+                var standardDeck = new StandardDeck();
+                SetDeck(standardDeck);
+                Shuffle();
+
+                foreach(var index in Enumerable.Range(0, playerCount))
+                {
+                    AddPlayer(new Player() { Name = $"Player {index}" });
+                }
+
+                foreach(var player in Players)
+                {
+                    AddPlayerHand(player);
+                }
+
+        }
+
+        public override void DealHand()
+        {
+                //give each player two cards
+                foreach(var index in Enumerable.Range(0, numberOfCardsToDeal))
+                {
+                    foreach(var hand in PlayerHands)
+                    {
+                        DealToPlayer(1, hand);
+                    }
+                }
+
+        }
+
+        public override void OutputHandResults()
+        {
+                //Determine winners
+                foreach(var hand in PlayerHands)
+                {
+                    foreach(var opponentHand in PlayerHands.Where( h => h!=hand))
+                    {
+                        var handOutcome = GetHandOutcome(hand, opponentHand);
+                        Debug.WriteLine($"outcome: {hand.Player.Name} vs {opponentHand.Player.Name} card {hand.Cards[0].Name }/{hand.Cards[1].Name}  { handOutcome} against {opponentHand.Cards[0].Name}/{opponentHand.Cards[1].Name}  ");
+                    }
+                }
         }
 
         //<TODO> handle splits
