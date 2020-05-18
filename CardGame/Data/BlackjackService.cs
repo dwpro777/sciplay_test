@@ -60,6 +60,12 @@ namespace CardGame.Data
             return Blackjack.GetHandOutcome(hand, DealerHand);
         }
 
+        public int GetHandScore(Hand hand)
+        {
+            return Blackjack.GetBestScore(hand);
+
+        }
+
         public void Stay()
         {
             PlayDealerHand();

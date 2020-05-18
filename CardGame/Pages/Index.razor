@@ -112,7 +112,11 @@ else
         var hands = BlackjackService.Deal();
         playerHand = hands.FirstOrDefault(hand => hand.Player == player);
         dealerHand = hands.FirstOrDefault(hand => hand.Player == BlackjackService.Dealer);
+        if (BlackjackService.GetHandScore(playerHand) == 21)
+        {
+            handOutcome = GameLib.HandOutcome.Win;
+            hasWinner = true;
+        }
     }
-
 }
 
