@@ -1,7 +1,113 @@
 ﻿@page "/"
 
-<h1>Hello, world!</h1>
+@using CardGame.Data
+@using GameLib.Tables;
+@inject BlackjackService BlackjackService;
 
-Welcome to your new app.
 
-<SurveyPrompt Title="How is Blazor working for you?" />
+<h1>Blackjack Game</h1>
+@*<svg width="315" height="463"
+     xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <image href="images/English_pattern_playing_cards_deck.svg.png" x="315" y="0" height="463" width="315" />
+</svg>*@
+  @*/* clip: shape(top, right, bottom, left); NB 'rect' is the only available option */*@
+@*<image style="position:absolute; clip:rect(0,315,463,0)" href="images/English_pattern_playing_cards_deck.svg.png" style="position:absolute; clip:rect(0,630,463,315)" />*@
+
+@if (player == null)
+{
+
+    <button @onclick="@(e => buttonStartGameClick(e))">start a game of blackjack</button>
+
+}
+else
+{
+    <table >
+        <thead>
+            <tr>
+                <th>Your hand</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                @foreach (var card in playerHand.Cards)
+                {
+                    <td><img class="cardImage" src=@card.fileName  /></td>
+                }
+            </tr>
+        </tbody>
+    </table>
+
+    @if (!hasWinner)
+    {
+    <button @onclick="@(e => ButtonHitClick(e))">Hit </button>
+    <button @onclick="@(e => ButtonStayClick(e))">Stay</button>
+    }
+
+    <table >
+        <thead>
+            <tr>
+                <th>Dealer hand</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                @foreach (var card in dealerHand.Cards)
+                {
+                    <td><img class="cardImage" src=@card.fileName  /></td>
+                }
+            </tr>
+        </tbody>
+    </table>
+
+    @if (hasWinner)
+    {
+        <h2> You @handOutcome.ToString() !</h2>
+        <button @onclick="@(e => buttonResetClick(e))">Deal again</button>
+
+    }
+}
+
+@code {
+    private Hand playerHand;
+    private Hand dealerHand;
+    private Player player;
+    private bool hasWinner = false;
+    private GameLib.HandOutcome handOutcome;
+
+    private void buttonStartGameClick(MouseEventArgs e)
+    {
+        player = BlackjackService.JoinGame();
+        deal();
+    }
+
+    private void ButtonHitClick(MouseEventArgs e)
+    {
+        if (BlackjackService.Hit(playerHand) == -1)
+        {
+            handOutcome = GameLib.HandOutcome.Lose;
+            hasWinner = true;
+        }
+    }
+
+    private void ButtonStayClick(MouseEventArgs e)
+    {
+        BlackjackService.Stay();
+        handOutcome = BlackjackService.GetHandOutcome(playerHand);
+        hasWinner = true;
+    }
+
+    private void buttonResetClick(MouseEventArgs e)
+    {
+        hasWinner = false;
+        deal();
+    }
+
+    private void deal()
+    {
+        var hands = BlackjackService.Deal();
+        playerHand = hands.FirstOrDefault(hand => hand.Player == player);
+        dealerHand = hands.FirstOrDefault(hand => hand.Player == BlackjackService.Dealer);
+    }
+
+}
+

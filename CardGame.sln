@@ -3,9 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30002.166
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GameLib", "GameLib\GameLib.csproj", "{A7F843C9-F714-43EE-9742-43484B592563}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CardGame", "CardGame\CardGame.csproj", "{8CE50313-EC51-4F4E-AF49-25452667DFD0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GameTest", "GameTest\GameTest.csproj", "{97932602-B5A6-4AE5-A6E6-A601031A8167}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GameLib", "GameLib\GameLib.csproj", "{A7F843C9-F714-43EE-9742-43484B592563}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GameTest", "GameTest\GameTest.csproj", "{97932602-B5A6-4AE5-A6E6-A601031A8167}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -30,6 +32,7 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {C31E4277-B8EB-40A7-8B53-291851995B50}
+		        SolutionGuid = {C31E4277-B8EB-40A7-8B53-291851995B50}
+		SolutionGuid = {499E932C-5104-49BE-92B7-98E0BB561C68}
 	EndGlobalSection
 EndGlobal

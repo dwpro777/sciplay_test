@@ -34,6 +34,16 @@ namespace GameLib.Tables
                     {
                         newCard.Values = new int[] { (int)cardName };
                     }
+                    
+                    if((int) cardName >1 && (int) cardName < 11)
+                    {
+                        newCard.fileName = $"images/{(int)cardName}";
+                    }
+                    else
+                        newCard.fileName = $"images/{cardName.ToString().Substring(0,1)}";
+
+                    newCard.fileName += $"{CardSuit.ToString().Substring(0,1)}.png";
+
                     Cards.Add(newCard);
                 }
             }
@@ -56,7 +66,7 @@ namespace GameLib.Tables
             {
                 if (cardDealIndex + CardIndex < Cards.Count)
                 {
-                    dealtCards.Add(Cards[cardDealIndex + CardIndex]);
+                    dealtCards.Add(Cards[CardIndex]);
                     CardIndex++;
                 }
                 else

@@ -11,6 +11,7 @@ namespace GameLib.Tables
         public CardName Name { get; set; }
         public CardSuit Suit { get; set; }
         public int[] Values { get; set; }
+        public string fileName{ get; set; }
 
     }
 }

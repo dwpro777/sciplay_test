@@ -71,9 +71,7 @@ namespace GameTest
                 highcardGame.CreateGame(players);
                 highcardGame.DealHand();
                 highcardGame.OutputHandResults();
-
             }
-
 
         }
 

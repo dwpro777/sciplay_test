@@ -180,4 +180,10 @@ app {
         /* Never collapse the sidebar for wide screens */
         display: block;
     }
+
+    .cardImage{
+        height:250px;
+        height:163px;
+    }
+
 }

@@ -11,68 +11,32 @@ namespace GameLib.Games
     {
 
         public List<Player> Players { get; private set; }
-        protected List<Hand> PlayerHands { get; private set; }
-        private IDeck Deck { get; set; }
 
         public Game()
         {
             Players = new List<Player>();
-            PlayerHands = new List<Hand>();
         }
 
-        public HandOutcome GetHandOutcome(Hand playerCards, Hand opponentCards)
-        {
-            var playerBestScore = GetBestScore(playerCards);
-            var opponentBestScore = GetBestScore(opponentCards);
-            
-            if (playerBestScore > opponentBestScore)
-                return HandOutcome.Win;
-            else if (playerBestScore == opponentBestScore)
-                return HandOutcome.Draw;
-            else
-                return HandOutcome.Lose;
-
-        }
-
-        protected void SetDeck(IDeck deck)
-        {
-            Deck = deck;
-        }
-
-        protected void Shuffle()
-        {
-            Deck.Shuffle();
-        }
-
-        protected void DealToPlayer(int NumberOfCards, Hand hand)
-        {
-            hand.Cards.AddRange(Deck.Deal(NumberOfCards));
-        }
-
-        protected void AddPlayer(Player player)
+        public void AddPlayer(Player player)
         {
             Players.Add(player);
         }
 
-        protected Hand AddPlayerHand(Player player)
+        public virtual void RemovePlayer(Player player)
         {
-            var newHand = new Hand() { Player = player }; 
-            PlayerHands.Add(newHand);
-            return newHand;
-        }
-
-        protected void RemovePlayer(Player player)
-        {
-            PlayerHands = PlayerHands.Where(ph => ph.Player != player).ToList();
             Players.Remove(player);
         }
 
-        public abstract GameType GetGameType();
-        public abstract void CreateGame(int playerCount);
-        public abstract void DealHand();
+        public virtual void CreateGame(int playerCount)
+        {
+            foreach(var index in Enumerable.Range(0, playerCount))
+            {
+                AddPlayer(new Player() { Name = $"Player {index}" });
+            }
 
-        public abstract int GetBestScore(Hand hand);
-        public abstract void OutputHandResults();
+        }
+
+        public abstract GameType GetGameType();
 
     }
 }

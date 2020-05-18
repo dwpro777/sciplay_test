@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace GameLib.Games
 {
-    public class Blackjack : Game
+    public class Blackjack : CardGame
     {
         private readonly CardName[] Facecards = { CardName.Jack, CardName.Queen, CardName.King };
         private const int numberOfCardsToDeal = 2; 
@@ -46,24 +46,6 @@ namespace GameLib.Games
             return bestScoreQuery.Any() ? bestScoreQuery.Max() : -1;
         }
 
-        public override void CreateGame(int playerCount)
-        {
-                var standardDeck = new StandardDeck();
-                SetDeck(standardDeck);
-                Shuffle();
-
-                foreach(var index in Enumerable.Range(0, playerCount))
-                {
-                    AddPlayer(new Player() { Name = $"Player {index}" });
-                }
-
-                foreach(var player in Players)
-                {
-                    AddPlayerHand(player);
-                }
-
-        }
-
         public override void DealHand()
         {
                 //give each player two cards
@@ -91,8 +73,6 @@ namespace GameLib.Games
         }
 
         //<TODO> handle splits
-        //Consider, who can see which cards, who is playing against whom (ie, is everyone playing against the house)
-        //how should dealing rules be handled, since there would need to be interaction
 
     }
 }

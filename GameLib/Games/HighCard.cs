@@ -9,12 +9,10 @@ using System.Threading.Tasks;
 
 namespace GameLib.Games
 {
-    public class HighCard: Game
+    public class HighCard: CardGame
     {
         public override GameType GetGameType() => GameType.HighCard;
         private const int numberOfCardsToDeal = 1; 
-
-        //Question: How to enforce 'rules' (ie, who would control dealing, should that be enforced by the game class?)
 
         public override int GetBestScore(Hand hand)
         {
@@ -29,23 +27,6 @@ namespace GameLib.Games
             }
 
             return potentialOutcomes.Any() ? potentialOutcomes.Max() : -1;
-        }
-
-        public override void CreateGame(int playerCount)
-        {
-                var standardDeck = new StandardDeck();
-                SetDeck(standardDeck);
-                Shuffle();
-
-                foreach(var index in Enumerable.Range(0, playerCount))
-                {
-                    AddPlayer(new Player() { Name = $"Player {index}" });
-                }
-
-                foreach(var player in Players)
-                {
-                    AddPlayerHand(player);
-                }
         }
 
         public override void DealHand()
