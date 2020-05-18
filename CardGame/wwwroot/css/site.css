@@ -186,4 +186,9 @@ app {
         height:163px;
     }
 
+    .cardGameButton, .cardGameTable{
+        padding:10px;
+        margin:10px;
+    }
+
 }

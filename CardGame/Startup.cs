@@ -28,8 +28,7 @@ namespace CardGame
         {
             services.AddRazorPages();
             services.AddServerSideBlazor();
-            services.AddSingleton<WeatherForecastService>();
-            services.AddSingleton<BlackjackService>();
+            services.AddScoped<BlackjackService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

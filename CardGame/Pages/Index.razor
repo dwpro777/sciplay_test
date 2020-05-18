@@ -21,7 +21,7 @@
 }
 else
 {
-    <table >
+    <table class="cardGameTable">
         <thead>
             <tr>
                 <th>Your hand</th>
@@ -39,11 +39,11 @@ else
 
     @if (!hasWinner)
     {
-    <button @onclick="@(e => ButtonHitClick(e))">Hit </button>
-    <button @onclick="@(e => ButtonStayClick(e))">Stay</button>
+    <button class="cardGameButton" @onclick="@(e => ButtonHitClick(e))">Hit</button>
+    <button class="cardGameButton" @onclick="@(e => ButtonStayClick(e))">Stay</button>
     }
 
-    <table >
+    <table class="cardGameTable">
         <thead>
             <tr>
                 <th>Dealer hand</th>
@@ -61,9 +61,8 @@ else
 
     @if (hasWinner)
     {
-        <h2> You @handOutcome.ToString() !</h2>
-        <button @onclick="@(e => buttonResetClick(e))">Deal again</button>
-
+        <h1> You @handOutcome.ToString() !</h1>
+        <button class="cardGameButton" @onclick="@(e => buttonResetClick(e))">Deal again</button>
     }
 }
 
