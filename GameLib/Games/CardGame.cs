@@ -45,9 +45,9 @@ namespace GameLib.Games
             Deck.Shuffle();
         }
 
-        public void DealToPlayer(int NumberOfCards, Hand hand)
+        public void DealToPlayer(int NumberOfCards, Hand hand, bool isVisible = true)
         {
-            hand.Cards.AddRange(Deck.Deal(NumberOfCards));
+            hand.Cards.AddRange(Deck.Deal(NumberOfCards,isVisible));
         }
 
         public override void RemovePlayer(Player player)

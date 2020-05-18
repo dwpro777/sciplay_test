@@ -59,13 +59,14 @@ namespace GameLib.Tables
             CardIndex = 0;
         }
 
-        public List<Card> Deal(int cardCount)
+        public List<Card> Deal(int cardCount, bool isVisible)
         {
             var dealtCards = new List<Card>();
             foreach (var cardDealIndex in Enumerable.Range(0, cardCount))
             {
                 if (cardDealIndex + CardIndex < Cards.Count)
                 {
+                    Cards[CardIndex].IsVisible = isVisible;
                     dealtCards.Add(Cards[CardIndex]);
                     CardIndex++;
                 }

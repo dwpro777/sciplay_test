@@ -12,6 +12,7 @@ namespace GameLib.Tables
         public CardSuit Suit { get; set; }
         public int[] Values { get; set; }
         public string fileName{ get; set; }
+        public bool IsVisible{ get; set; }
 
     }
 }

@@ -31,7 +31,15 @@ else
             <tr>
                 @foreach (var card in playerHand.Cards)
                 {
-                    <td><img class="cardImage" src=@card.fileName  /></td>
+                    @if (card.IsVisible)
+                    {
+                        <td><img class="cardImage" src=@card.fileName  /></td>
+                    }
+                    else
+                    {
+                        <td><img class="cardImage" src="images/purple_back.png"  /></td>
+                    }
+
                 }
             </tr>
         </tbody>
@@ -53,7 +61,14 @@ else
             <tr>
                 @foreach (var card in dealerHand.Cards)
                 {
-                    <td><img class="cardImage" src=@card.fileName  /></td>
+                    @if (card.IsVisible)
+                    {
+                        <td><img class="cardImage" src=@card.fileName  /></td>
+                    }
+                    else
+                    {
+                        <td><img class="cardImage" src="images/purple_back.png"  /></td>
+                    }
                 }
             </tr>
         </tbody>

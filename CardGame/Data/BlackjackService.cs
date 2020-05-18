@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices.ComTypes;
 using System.Threading.Tasks;
 
@@ -42,6 +43,9 @@ namespace CardGame.Data
             Blackjack.Shuffle();
             DealerHand = Blackjack.PlayerHands.FirstOrDefault(hand => hand.Player == Dealer);
             Blackjack.PlayerHands.ForEach(hand => Blackjack.DealToPlayer(2,hand));
+            //hide the dealers 2nd card (in a real implementation this wouldn't go to the client)
+            DealerHand.Cards.Last().IsVisible = false;   
+            
             return GetHands();
         }
 
@@ -65,13 +69,13 @@ namespace CardGame.Data
         {
 
             var dealerScore = Blackjack.GetBestScore(DealerHand);
+            DealerHand.Cards.ForEach(card => card.IsVisible = true);
             while (0 < dealerScore && dealerScore < 17)
             {
                 Blackjack.DealToPlayer(1, DealerHand);
                 dealerScore = Blackjack.GetBestScore(DealerHand);
             }
         }
-
 
     }
 }

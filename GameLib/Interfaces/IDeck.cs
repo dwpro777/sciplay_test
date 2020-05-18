@@ -8,6 +8,6 @@ namespace GameLib
     public interface IDeck
     {
         void Shuffle();
-        List<Card> Deal(int cardCount);
+        List<Card> Deal(int cardCount, bool isVisible);
     }
 }
