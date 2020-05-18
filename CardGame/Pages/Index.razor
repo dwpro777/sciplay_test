@@ -4,16 +4,7 @@
 @using GameLib.Tables;
 @inject BlackjackService BlackjackService;
 
-
-<h1>Blackjack Game</h1>
-@*<svg width="315" height="463"
-     xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-    <image href="images/English_pattern_playing_cards_deck.svg.png" x="315" y="0" height="463" width="315" />
-</svg>*@
-  @*/* clip: shape(top, right, bottom, left); NB 'rect' is the only available option */*@
-@*<image style="position:absolute; clip:rect(0,315,463,0)" href="images/English_pattern_playing_cards_deck.svg.png" style="position:absolute; clip:rect(0,630,463,315)" />*@
-
-@if (player == null)
+@if (player == null || playerHand == null || dealerHand == null)
 {
 
     <button @onclick="@(e => buttonStartGameClick(e))">start a game of blackjack</button>
@@ -21,6 +12,29 @@
 }
 else
 {
+    <table class="cardGameTable">
+        <thead>
+            <tr>
+                <th>Dealer hand</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                @foreach (var card in dealerHand.Cards)
+                {
+                    @if (card.IsVisible)
+                    {
+                        <td><img class="cardImage" src=@card.fileName  /></td>
+                    }
+                    else
+                    {
+                        <td><img class="cardImage" src="images/purple_back.png"  /></td>
+                    }
+                }
+            </tr>
+        </tbody>
+    </table>
+
     <table class="cardGameTable">
         <thead>
             <tr>
@@ -50,29 +64,6 @@ else
     <button class="cardGameButton" @onclick="@(e => ButtonHitClick(e))">Hit</button>
     <button class="cardGameButton" @onclick="@(e => ButtonStayClick(e))">Stay</button>
     }
-
-    <table class="cardGameTable">
-        <thead>
-            <tr>
-                <th>Dealer hand</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                @foreach (var card in dealerHand.Cards)
-                {
-                    @if (card.IsVisible)
-                    {
-                        <td><img class="cardImage" src=@card.fileName  /></td>
-                    }
-                    else
-                    {
-                        <td><img class="cardImage" src="images/purple_back.png"  /></td>
-                    }
-                }
-            </tr>
-        </tbody>
-    </table>
 
     @if (hasWinner)
     {

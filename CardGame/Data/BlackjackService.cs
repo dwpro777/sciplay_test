@@ -42,10 +42,10 @@ namespace CardGame.Data
             Blackjack.Players.ForEach(player => Blackjack.AddPlayerHand(player));
             Blackjack.Shuffle();
             DealerHand = Blackjack.PlayerHands.FirstOrDefault(hand => hand.Player == Dealer);
-            Blackjack.PlayerHands.ForEach(hand => Blackjack.DealToPlayer(2,hand));
-            //hide the dealers 2nd card (in a real implementation this wouldn't go to the client)
-            DealerHand.Cards.Last().IsVisible = false;   
-            
+            Blackjack.PlayerHands.ForEach(hand => Blackjack.DealToPlayer(2, hand));
+            //hide the dealers 2nd card(in a real implementation this wouldn't go to the client)
+            DealerHand.Cards.Last().IsVisible = false;
+
             return GetHands();
         }
 

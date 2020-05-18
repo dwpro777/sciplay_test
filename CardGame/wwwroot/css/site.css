@@ -182,13 +182,24 @@ app {
     }
 
     .cardImage{
-        height:250px;
-        height:163px;
+        /*height:250px;
+        width:163px;*/
+        max-width:120px;
+        max-height:184px;
+        /*width:163px;*/
     }
 
     .cardGameButton, .cardGameTable{
         padding:10px;
         margin:10px;
+    }
+
+    .cardGameTable table {
+    width:100%;
+    }
+    .cardGameTable td {
+        max-width:20%;
+        max-height:30%;
     }
 
 }
