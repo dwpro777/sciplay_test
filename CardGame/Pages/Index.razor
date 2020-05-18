@@ -1,14 +1,11 @@
 ﻿@page "/"
 
 @using CardGame.Data
-@using GameLib.Tables;
 @inject BlackjackService BlackjackService;
 
-@if (player == null || playerHand == null || dealerHand == null)
+@if( @bindingObject == null || @bindingObject.Player == null || @bindingObject.PlayerHands == null || @bindingObject.DealerHand == null)
 {
-
     <button @onclick="@(e => buttonStartGameClick(e))">start a game of blackjack</button>
-
 }
 else
 {
@@ -20,15 +17,15 @@ else
         </thead>
         <tbody>
             <tr>
-                @foreach (var card in dealerHand.Cards)
+                @foreach (var card in @bindingObject.DealerHand.Cards)
                 {
                     @if (card.IsVisible)
                     {
-                        <td><img class="cardImage" src=@card.fileName  /></td>
+                        <td><img class="cardImage" src=@card.fileName /></td>
                     }
                     else
                     {
-                        <td><img class="cardImage" src="images/purple_back.png"  /></td>
+                        <td><img class="cardImage" src="images/purple_back.png" /></td>
                     }
                 }
             </tr>
@@ -43,80 +40,65 @@ else
         </thead>
         <tbody>
             <tr>
-                @foreach (var card in playerHand.Cards)
+                @foreach (var playerHand in bindingObject.PlayerHands)
                 {
-                    @if (card.IsVisible)
+                    @foreach (var card in playerHand.Cards)
                     {
-                        <td><img class="cardImage" src=@card.fileName  /></td>
-                    }
-                    else
-                    {
-                        <td><img class="cardImage" src="images/purple_back.png"  /></td>
-                    }
+                        @if (card.IsVisible)
+                        {
+                            <td><img class="cardImage" src=@card.fileName /></td>
+                        }
+                        else
+                        {
+                            <td><img class="cardImage" src="images/purple_back.png" /></td>
+                        }
 
+                    }
                 }
             </tr>
         </tbody>
     </table>
 
-    @if (!hasWinner)
+    @if (!bindingObject.HasWinner)
     {
-    <button class="cardGameButton" @onclick="@(e => ButtonHitClick(e))">Hit</button>
-    <button class="cardGameButton" @onclick="@(e => ButtonStayClick(e))">Stay</button>
+        <button class="cardGameButton" @onclick="@(e => ButtonHitClick(e))">Hit</button>
+        <button class="cardGameButton" @onclick="@(e => ButtonStayClick(e))">Stay</button>
     }
 
-    @if (hasWinner)
+    @if (@bindingObject.HasWinner)
     {
-        <h1> You @handOutcome.ToString() !</h1>
+        <h1> You @bindingObject.HandOutcome.ToString() !</h1>
         <button class="cardGameButton" @onclick="@(e => buttonResetClick(e))">Deal again</button>
     }
 }
 
 @code {
-    private Hand playerHand;
-    private Hand dealerHand;
-    private Player player;
-    private bool hasWinner = false;
-    private GameLib.HandOutcome handOutcome;
+    private BindingObject bindingObject;
 
     private void buttonStartGameClick(MouseEventArgs e)
     {
-        player = BlackjackService.JoinGame();
+        bindingObject = BlackjackService.JoinGame();
         deal();
     }
 
     private void ButtonHitClick(MouseEventArgs e)
     {
-        if (BlackjackService.Hit(playerHand) == -1)
-        {
-            handOutcome = GameLib.HandOutcome.Lose;
-            hasWinner = true;
-        }
+        BlackjackService.Hit();
     }
 
     private void ButtonStayClick(MouseEventArgs e)
     {
         BlackjackService.Stay();
-        handOutcome = BlackjackService.GetHandOutcome(playerHand);
-        hasWinner = true;
     }
 
     private void buttonResetClick(MouseEventArgs e)
     {
-        hasWinner = false;
         deal();
     }
 
     private void deal()
     {
-        var hands = BlackjackService.Deal();
-        playerHand = hands.FirstOrDefault(hand => hand.Player == player);
-        dealerHand = hands.FirstOrDefault(hand => hand.Player == BlackjackService.Dealer);
-        if (BlackjackService.GetHandScore(playerHand) == 21)
-        {
-            handOutcome = GameLib.HandOutcome.Win;
-            hasWinner = true;
-        }
+        BlackjackService.Deal();
     }
 }
 
